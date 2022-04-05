@@ -20,26 +20,26 @@ int main(int argc, char **argv) {
         for(i=0; i<input; i++){
             switch (pid[i] = fork()) {
             case 0:         /* fork returns 0 ke proses anak */
-                printf("Proses anak\n");
+                printf("");
                 // tulis data ke pipe
                 int arrIntChild[MSGSIZE] = {rand()%(100+1-0)+0 ,rand()%(100+1-0)+0,rand()%(100+1-0)+0};
                 write(fd[1], arrIntChild, sizeof(arrIntChild));
                 for (int i = 0; i<MSGSIZE; i++) {
-                    printf("proses menulis: %d \n", arrIntChild[i]);
+                    printf("proses %d menulis: %d \n", i, arrIntChild[i]);
                 }
                 break;
 
             default:        /* fork returns pid ke proses ortu */
-                printf("Proses parent\n");
+                printf("");
                 int arrIntParent[MSGSIZE];
                 int jumlah = 0;
                 // baca yang ditulis child dari pipe
                 read(fd[0], arrIntParent, sizeof(arrIntParent));
                 for (int i = 0; i<MSGSIZE; i++) {
-                    printf("proses child menulis: %d \n", arrIntParent[i]);
+                    printf("proses %d child menulis: %d \n", i, arrIntParent[i]);
                     jumlah = jumlah + arrIntParent[i];
                 }
-                printf ("jumlah = %d\n", jumlah);
+                printf ("jumlah proses ke %d = %d\n", i, jumlah);
                 break;
 
             case -1:        /* error */
