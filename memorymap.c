@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
                 case 0:         /*  proses anak */
                         printf("Proses %d anak \n", j);
                         //isi data di memory map
+                        srand(getpid());
                         shared[0] = rand()%(100+1-0)+0;
                         shared[1] = rand()%(100+1-0)+0;
                         shared[2] = rand()%(100+1-0)+0;

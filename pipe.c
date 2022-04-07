@@ -12,20 +12,21 @@ int main(int argc, char **argv) {
         if (pipe(fd) < 0) {
             exit(1); //error
         }
-        int input, i;
+        int input, j;
         printf("Masukkan jumlah fork\n");
         scanf("%d", &input);
         int pid[input];
         printf("mulai \n");
-        for(i=0; i<input; i++){
-            switch (pid[i] = fork()) {
+        for(j=0; j<input; j++){
+            switch (pid[j] = fork()) {
             case 0:         /* fork returns 0 ke proses anak */
                 printf("");
                 // tulis data ke pipe
+                srand(getpid());
                 int arrIntChild[MSGSIZE] = {rand()%(100+1-0)+0 ,rand()%(100+1-0)+0,rand()%(100+1-0)+0};
                 write(fd[1], arrIntChild, sizeof(arrIntChild));
                 for (int i = 0; i<MSGSIZE; i++) {
-                    printf("proses %d menulis: %d \n", i, arrIntChild[i]);
+                    printf("proses %d %d child menulis: %d \n", j, getpid(), arrIntChild[i]);
                 }
                 break;
 
@@ -36,16 +37,16 @@ int main(int argc, char **argv) {
                 // baca yang ditulis child dari pipe
                 read(fd[0], arrIntParent, sizeof(arrIntParent));
                 for (int i = 0; i<MSGSIZE; i++) {
-                    printf("proses %d child menulis: %d \n", i, arrIntParent[i]);
+                    printf("proses %d %d parent membaca: %d \n", j, getpid(), arrIntParent[i]);
                     jumlah = jumlah + arrIntParent[i];
                 }
-                printf ("jumlah proses ke %d = %d\n", i, jumlah);
+                printf ("jumlah proses ke %d = %d\n", getpid(), jumlah);
                 break;
 
             case -1:        /* error */
                 perror("fork");
                 exit(1);
-        }
+            }
         }
 
         
