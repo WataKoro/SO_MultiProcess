@@ -12,5 +12,4 @@ Irfan Mochamad Esa           - 2005568
 Farah Balqist                - 2007339    
 
 ## Analisis Kelebihan dan Kekurangan
-- Memory map lebih mudah dipahami karena data shared.
 - Pipe hanya satu arah, memory map dua arah.
