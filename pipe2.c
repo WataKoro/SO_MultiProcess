@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
             for(i = 0; i < produsen; i++){
                 fork();
             }
-
+            close(fd[0]);
             // tulis data ke pipe
             srand(getpid());
             for(i = 0; i < MSGSIZE; i++){
@@ -42,17 +42,19 @@ int main(int argc, char **argv) {
             break;
 
         default:        /* fork returns pid ke proses ortu */
+            close(fd[1]);
             for(j = 0; j < konsumen; j++){
                 fork();
             }
-
             int jumlah = 0;
             // baca yang ditulis child dari pipe
             read(fd[0], arrInt, sizeof(arrInt));
             for(j = 0; j < MSGSIZE; j++){
                 printf("Konsumen %d mengambil %d\n", getpid(), arrInt[j]);
+                jumlah = jumlah+arrInt[j];
                 sleep(1);
             }
+            printf("jumlah : %d\n", jumlah);
 
             break;
 
