@@ -13,3 +13,4 @@ Farah Balqist                - 2007339
 
 ## Analisis Kelebihan dan Kekurangan
 - Pipe hanya satu arah, memory map dua arah.
+- Pipe hanya berkomunikasi satu ke satu, memory map banyak ke banyak
